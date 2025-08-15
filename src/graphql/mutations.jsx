@@ -49,12 +49,14 @@ export const INSERT_USER_MESSAGE = gql`
 
 // Call Hasura Action to send message (n8n workflow)
 export const SEND_MESSAGE_ACTION = gql`
-  mutation SendMessage($chatId: uuid!, $content: String!) {
-    sendMessage(chat_id: $chatId, content: $content) {
-      reply
-    }
+  mutation SendMessage(
+    $chatId: uuid!
+    $content: String!
+    $history: json!
+  ) {
+    sendMessage(chat_id: $chatId, content: $content, history: $history)
   }
-`
+`;
 
 // Delete a specific message
 export const DELETE_MESSAGE = gql`

@@ -119,7 +119,7 @@ export default function ChatList({ selectedChatId, onSelect }) {
 
             {queryLoading || subLoading ? <p className="text-blue-500">Loading chats...</p>
                 :
-                <div className="w-[100%] border-grey-700 bg-gray-900 text-white overflow-y-auto">
+                <div className="w-[100%] border-grey-700 bg-gray-900 text-white overflow-y-auto pb-[200px] border-[0px]">
                     {chats.map((chat) => {
                         return (<div
                             key={chat.id}
