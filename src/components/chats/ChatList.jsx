@@ -94,7 +94,7 @@ export default function ChatList({ selectedChatId, onSelect }) {
     };
 
     if (!user) return <p className="text-gray-500">Please sign in to view chats.</p>;
-    if (queryLoading || subLoading) return <p className="text-blue-500">Loading chats...</p>;
+    // if (queryLoading || subLoading) return <p className="text-blue-500">Loading chats...</p>;
     if (queryError || subError)
         return <p className="text-red-500">Error: {queryError?.message || subError?.message}</p>;
 
@@ -116,94 +116,98 @@ export default function ChatList({ selectedChatId, onSelect }) {
                     onClick={handleChatAdd}
                     className="w-[100%] text-[black] bg-[white] px-[20px] py-[5px] rounded-[5px] mt-[10px] mb-[10px]">New Chat</button>
             }
-            <div className="w-[100%] border-grey-700 bg-gray-900 text-white overflow-y-auto">
-                {chats.map((chat) => {
-                    return (<div
-                        key={chat.id}
-                        className={`group flex justify-between items-center px-4 py-2 cursor-pointer hover:bg-gray-800 ${selectedChatId === chat.id ? "bg-gray-800" : ""
-                            }`}
-                        onClick={() => onSelect(chat.id)}
-                    >
 
-                        {editing == true && chat.id == editingId && (
-                            <div className="w-[100%] flex flex-row items-center justify-between gap-x-[4px]">
-                                <input
-                                    type="text"
-                                    placeholder={rename}
-                                    value={rename}
-                                    className="w-[80%] text-white px-3 py-1 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
-                                    onChange={(e) => setRename(e.currentTarget.value)}
-                                />
-                                <button
-                                    onClick={() => {
-                                        handleEditChat(chat.id)
-                                    }}
-                                    className="hover:bg-[rgba(0,0,0,0.3)] rounded-[100%] p-[7px]"
+            {queryLoading || subLoading ? <p className="text-blue-500">Loading chats...</p>
+                :
+                <div className="w-[100%] border-grey-700 bg-gray-900 text-white overflow-y-auto">
+                    {chats.map((chat) => {
+                        return (<div
+                            key={chat.id}
+                            className={`group flex justify-between items-center px-4 py-2 cursor-pointer hover:bg-gray-800 ${selectedChatId === chat.id ? "bg-gray-800" : ""
+                                }`}
+                            onClick={() => onSelect(chat.id)}
+                        >
 
-                                >
-                                    <Edit />
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        setRename("")
-                                        setEditingId("")
-                                        setEditing(false)
-                                    }}
-                                    className="hover:bg-[rgba(0,0,0,0.3)] rounded-[100%] p-[7px]"
-                                >
-                                    <Cancel />
-                                </button>
-                            </div>
-                        )}
+                            {editing == true && chat.id == editingId && (
+                                <div className="w-[100%] flex flex-row items-center justify-between gap-x-[4px]">
+                                    <input
+                                        type="text"
+                                        placeholder={rename}
+                                        value={rename}
+                                        className="w-[80%] text-white px-3 py-1 bg-gray-800 border border-gray-600 rounded-lg focus:outline-none focus:border-blue-500"
+                                        onChange={(e) => setRename(e.currentTarget.value)}
+                                    />
+                                    <button
+                                        onClick={() => {
+                                            handleEditChat(chat.id)
+                                        }}
+                                        className="hover:bg-[rgba(0,0,0,0.3)] rounded-[100%] p-[7px]"
 
-                        {chat.id != editingId &&
-                            <span>{chat.name}</span>
-                        }
+                                    >
+                                        <Edit />
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setRename("")
+                                            setEditingId("")
+                                            setEditing(false)
+                                        }}
+                                        className="hover:bg-[rgba(0,0,0,0.3)] rounded-[100%] p-[7px]"
+                                    >
+                                        <Cancel />
+                                    </button>
+                                </div>
+                            )}
 
-                        {chat.id != editingId &&
-                            <div className="relative">
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        setMenuOpenId(menuOpenId === chat.id ? null : chat.id);
-                                    }}
-                                    className="px-[13px] py-[3px] text-[100%] rounded-[100%] hover:bg-gray-700"
-                                >
-                                    ⋮
-                                </button>
-                                {menuOpenId === chat.id && chat.id != editingId && (
-                                    <div className="absolute right-0 mt-1 w-32 bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setEditing(true)
-                                                setRename(chat.name)
-                                                setEditingId(chat.id)
-                                                setMenuOpenId(null);
+                            {chat.id != editingId &&
+                                <span>{chat.name}</span>
+                            }
 
-                                            }}
-                                            className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700"
-                                        >
-                                            Rename
-                                        </button>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                handleDeleteChat(chat.id);
-                                                setMenuOpenId(null);
-                                            }}
-                                            className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        }
-                    </div>
-                    )
-                })}
-            </div>
+                            {chat.id != editingId &&
+                                <div className="relative">
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setMenuOpenId(menuOpenId === chat.id ? null : chat.id);
+                                        }}
+                                        className="px-[13px] py-[3px] text-[100%] rounded-[100%] hover:bg-gray-700"
+                                    >
+                                        ⋮
+                                    </button>
+                                    {menuOpenId === chat.id && chat.id != editingId && (
+                                        <div className="absolute right-0 mt-1 w-32 bg-gray-800 border border-gray-700 rounded shadow-lg z-10">
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setEditing(true)
+                                                    setRename(chat.name)
+                                                    setEditingId(chat.id)
+                                                    setMenuOpenId(null);
+
+                                                }}
+                                                className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700"
+                                            >
+                                                Rename
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    handleDeleteChat(chat.id);
+                                                    setMenuOpenId(null);
+                                                }}
+                                                className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            }
+                        </div>
+                        )
+                    })}
+                </div>
+            }
         </div >
     );
 }
