@@ -1,12 +1,48 @@
-# React + Vite
+# Chatbot Application – Internship Assessment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Overview
+This project is a **Chatbot Application** built as part of the internship assessment.  
+It features **email authentication**, a **real-time chat system**, and an **AI chatbot** powered through **n8n** and **OpenRouter**, with **Hasura GraphQL** as the backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
+- **Email Sign Up / Sign In** using **Nhost Auth**
+- **Real-time chat** with Hasura GraphQL subscriptions
+- **Chat context preservation** – the chatbot remembers previous messages in the same conversation
+- **Row-Level Security (RLS)** to ensure data privacy
+- **n8n Workflow** integration for chatbot responses
+- **Fully GraphQL-based** communication (no REST)
+- **Deployed on Netlify** for easy access
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🖼 Application Screenshots
+
+### 🏠 Home Page
+![Home Page](public/images/home.png)
+
+### 🔐 Sign In
+![Sign In](public/images/signin.png)
+
+### 📝 Sign Up
+![Sign Up](public/images/signup.png)
+
+### 💬 Chat Page
+![Chat Page](public/images/chats1.png)
+### 
+![Chat Page](public/images/chats2.png)
+
+---
+
+## 🛠 Tech Stack
+- **Frontend:** React, Vite Tailwind CSS, React Markdown
+- **Backend:** Hasura GraphQL, Nhost Auth
+- **Automation:** n8n
+- **AI API:** OpenRouter
+- **Hosting:** Netlify
+
+---
+
+
