@@ -1,22 +1,44 @@
 import { useState } from "react";
-import { useSignInEmailPassword } from "@nhost/react";
+import { useSignInEmailPassword, useUserData } from "@nhost/react";
 import { useNavigate, Link } from "react-router-dom";
+import nhost from "../utils/nhostClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignIn() {
     const navigate = useNavigate();
     const { signInEmailPassword, isLoading, isSuccess, isError, error } =
         useSignInEmailPassword();
+    const user = useUserData();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignIn = async (e) => {
-        e.preventDefault();
-        const res = await signInEmailPassword(email, password);
-        //console.log(res);
+        try {
+
+            e.preventDefault();
+            const res = await signInEmailPassword(email, password);
+            //await nhost.auth.refreshSession();
+            // console.log(user);
+            // console.log("error")
+            // console.log(res)
+            if (res?.needsEmailVerification) {
+                toast.error("please verify you email. Check you inbox or spam email.")
+                return
+            }
+            //console.log(res);
+        }
+        catch (er) {
+            toast.error("Error while login");
+            //console.log(er);
+        }
     };
 
     if (isSuccess) {
+        // console.log(user);
+        // console.log(isSuccess);
+        toast.success("successfully login");
         navigate("/chats"); // Redirect after login
     }
 

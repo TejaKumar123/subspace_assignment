@@ -1,22 +1,81 @@
 import React, { useState } from "react";
-import { useSignUpEmailPassword } from "@nhost/react";
+import { useSignInEmailPassword, useSignUpEmailPassword, useUserData } from "@nhost/react";
 import { useNavigate, Link } from "react-router-dom";
+import nhost from "../utils/nhostClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function SignUp() {
     const navigate = useNavigate();
     const { signUpEmailPassword, isLoading, isSuccess, isError, error } =
         useSignUpEmailPassword();
+    const { signInEmailPassword } =
+        useSignInEmailPassword();
+    const user = useUserData();
+    const [emailSent, setEmailSent] = useState(false);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSignUp = async (e) => {
-        e.preventDefault();
-        await signUpEmailPassword(email, password);
+        try {
+
+            e.preventDefault();
+            let res = await signUpEmailPassword(email, password);
+            // console.log(user);
+            // console.log("result");
+            // console.log(res);
+            if (res?.needsEmailVerification) {
+                setEmailSent(true);
+            }
+        }
+        catch (er) {
+            toast.error("error occured.")
+            console.log(er);
+        }
     };
 
+    const handleVerifyEmail = async () => {
+        try {
+            let res = await signInEmailPassword(email, password);
+            if (res?.needsEmailVerification) {
+                toast.error("Email not verified")
+            }
+        }
+        catch (er) {
+            toast.error("error while verifying");
+            //console.log(er);
+        }
+    }
+
     if (isSuccess) {
+        console.log(user);
+        console.log(isSuccess);
         navigate("/chats"); // Redirect after successful signup
+    }
+
+    if (emailSent) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+                <div className="bg-gray-900 p-8 rounded-xl shadow-lg w-full max-w-md border border-gray-700">
+                    <h2 className="text-3xl font-bold text-center mb-6">Sign Up</h2>
+                    <div className="flex w-auto h-auto px-[10px] py-[5px] flex-col items-center justify-start bg-[rgba(255,255,255,1)] border-[rgba(255,255,255,0.5)] border-[1px] rounded-[7px]">
+                        <p className="text-center text-[100%] text-[green]">Email sent Successfully</p>
+                        <p className="text-center text-[90%] text-[black]">Please check your spam emails also</p>
+                        <p className="text-center text-[90%] text-[black]">Click the following button after verifying your email.</p>
+                    </div>
+                    <br />
+                    <button
+                        className="w-full px-4 py-2 bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+                        onClick={handleVerifyEmail}
+                    >
+                        Yes, Email Verified
+                    </button>
+
+
+                </div>
+            </div>
+        )
     }
 
     return (
