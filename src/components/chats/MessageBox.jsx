@@ -325,7 +325,7 @@ const CodeBlock = memo(({ children, className, inline, ...props }) => {
 });
 
 const MessageComponent = memo(({ msg }) => {
-    console.log("rendering in component")
+    //console.log("rendering in component")
     const [deleteMessage] = useMutation(DELETE_MESSAGE);
     const [isHovered, setIsHovered] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -406,7 +406,7 @@ const MessageComponent = memo(({ msg }) => {
         </div>
     );
 }, (prevProps, nextProps) => {
-    console.log("rendering");
+    //console.log("rendering");
     return prevProps.msg.id === nextProps.msg.id &&
         prevProps.msg.content === nextProps.msg.content &&
         prevProps.msg.sender === nextProps.msg.sender;
