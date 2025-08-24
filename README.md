@@ -37,7 +37,7 @@ It features **email authentication**, a **real-time chat system**, and an **AI c
 ---
 
 ## 🛠 Tech Stack
-- **Frontend:** React, Vite Tailwind CSS, React Markdown
+- **Frontend:** React, Vite Tailwind CSS, React Markdown, Nodejs  22.17.1
 - **Backend:** Hasura GraphQL, Nhost Auth
 - **Automation:** n8n
 - **AI API:** OpenRouter
