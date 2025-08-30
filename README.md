@@ -38,7 +38,6 @@ It features **email authentication**, a **real-time chat system**, and an **AI c
 
 ## Demo Video
 
-[Watch the demo](public/demo_video/chatbot.mp4)
 
 ---
 
