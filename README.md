@@ -36,6 +36,12 @@ It features **email authentication**, a **real-time chat system**, and an **AI c
 
 ---
 
+## Demo Video
+
+[Watch the demo](public/demo_video/chatbot.mp4)
+
+---
+
 ## 🛠 Tech Stack
 - **Frontend:** React, Vite Tailwind CSS, React Markdown, Nodejs  22.17.1
 - **Backend:** Hasura GraphQL, Nhost Auth
